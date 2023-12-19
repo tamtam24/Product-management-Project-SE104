@@ -3,14 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/sanphamDAO.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/danhmucDAO.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/DAL/sanpham.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/DAL/nguoidung.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/nguoidungDAO.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/Ket_Noi_CSDL.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/test101/SE104.java</file>
-            <file>file:/D:/Lap%20trinh%20UIT/Nhập%20môn%20CNPM/spring-boot-blogs/SE104-demo/src/DAL/danhmuc.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/danhmucDAO.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/GUI/GiaoDien.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/Ket_Noi_CSDL.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/DAL/nguoidung.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/GUI/DanhNhap.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/DAL/danhmuc.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/DAL/sanpham.java</file>
+            <file>file:/D:/Lap%20trinh%20UIT/Nhap%20mon%20CNPM/spring-boot-blogs/SE104-demo/src/BLL/nguoidungDAO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -12,26 +12,23 @@ import java.sql.SQLException;
  * @author Admin
  */
 public class Ket_Noi_CSDL {
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/se104_db";
-        String user = "root";
-        String password = "";
-        try {
-            // Register the driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Create a connection
-            Connection conn = DriverManager.getConnection(url, user, password);
-
-            // If connection is successful
-            System.out.println("Connected to the database successfully!");
-
-            // Close the connection
-            conn.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    public static Connection getConnection() {
+		Connection C=null;
+		
+		try {
+		//Dky voi DriverManager
+		   DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+		   String url = "jdbc:mySQL://localhost:3306/se104_db";
+		   String username = "root";
+		   String password = "";
+		   
+		   
+		   //Tao ket noi
+		   C=DriverManager.getConnection(url, username, password);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return C;
+	}
 }
