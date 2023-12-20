@@ -9,5 +9,8 @@ package DAL;
  * @author Admin
  */
 public class danhmuc {
-    
+    public String id;
+    public String ten;
+    public float dongia;
+    public boolean xoa;
 }

@@ -9,5 +9,8 @@ package DAL;
  * @author Admin
  */
 public class nguoidung {
-    
+    public String id;
+    public String tendangnhap;
+    public String matkhau;
+    public boolean xoa;
 }
