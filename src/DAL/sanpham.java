@@ -9,12 +9,76 @@ package DAL;
  * @author Admin
  */
 public class sanpham {
-    public String id;
-    public String danhmuc_id;
-    public String nguoidung_id;
-    public String ten;
-    public float dongia;
-    public int soluong;
-    public float thanhtien;
-    public boolean xoa;
+    private String id;
+    private String danhmuc_id;
+    private String nguoidung_id;
+    private String ten;
+    private float dongia;
+    private int soluong;
+    private float thanhtien;
+    private boolean xoa;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDanhmuc_id() {
+        return danhmuc_id;
+    }
+
+    public String getNguoidung_id() {
+        return nguoidung_id;
+    }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public float getDongia() {
+        return dongia;
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public float getThanhtien() {
+        return thanhtien;
+    }
+
+    public boolean isXoa() {
+        return xoa;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDanhmuc_id(String danhmuc_id) {
+        this.danhmuc_id = danhmuc_id;
+    }
+
+    public void setNguoidung_id(String nguoidung_id) {
+        this.nguoidung_id = nguoidung_id;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public void setDongia(float dongia) {
+        this.dongia = dongia;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
+
+    public void setThanhtien(float thanhtien) {
+        this.thanhtien = thanhtien;
+    }
+
+    public void setXoa(boolean xoa) {
+        this.xoa = xoa;
+    }
 }
