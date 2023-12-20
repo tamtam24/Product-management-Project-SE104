@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `qlbanhang` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `qlbanhang` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `qlbanhang`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
@@ -23,14 +23,14 @@ USE `qlbanhang`;
 
 DROP TABLE IF EXISTS `danhmuc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `danhmuc` (
   `id` varchar(10) NOT NULL,
   `ten` varchar(255) NOT NULL,
   `dongia` float NOT NULL,
   `xoa` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,14 +49,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `nguoidung`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `nguoidung` (
   `id` varchar(10) NOT NULL,
   `tendangnhap` varchar(255) NOT NULL,
   `matkhau` varchar(255) DEFAULT NULL,
   `xoa` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sanpham`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `sanpham` (
   `id` varchar(10) NOT NULL,
   `danhmuc_id` varchar(10) DEFAULT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE `sanpham` (
   KEY `nguoidung_id` (`nguoidung_id`),
   CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`danhmuc_id`) REFERENCES `danhmuc` (`id`),
   CONSTRAINT `sanpham_ibfk_2` FOREIGN KEY (`nguoidung_id`) REFERENCES `nguoidung` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
