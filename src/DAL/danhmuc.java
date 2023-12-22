@@ -9,5 +9,40 @@ package DAL;
  * @author Admin
  */
 public class danhmuc {
-    
+    private String id;
+    private String ten;
+    private float dongia;
+    private boolean xoa;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public float getDongia() {
+        return dongia;
+    }
+
+    public boolean isXoa() {
+        return xoa;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDongia(float dongia) {
+        this.dongia = dongia;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public void setXoa(boolean xoa) {
+        this.xoa = xoa;
+    }
 }
