@@ -9,5 +9,40 @@ package DAL;
  * @author Admin
  */
 public class nguoidung {
-    
+    private String id;
+    private String tendangnhap;
+    private String matkhau;
+    private boolean xoa;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTendangnhap() {
+        return tendangnhap;
+    }
+
+    public String getMatkhau() {
+        return matkhau;
+    }
+
+    public boolean isXoa() {
+        return xoa;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTendangnhap(String tendangnhap) {
+        this.tendangnhap = tendangnhap;
+    }
+
+    public void setMatkhau(String matkhau) {
+        this.matkhau = matkhau;
+    }
+
+    public void setXoa(boolean xoa) {
+        this.xoa = xoa;
+    }
 }
