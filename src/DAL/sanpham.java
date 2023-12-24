@@ -16,7 +16,7 @@ public class sanpham {
     private float dongia;
     private int soluong;
     private float thanhtien;
-    private boolean xoa;
+    private int xoa;
 
     public String getId() {
         return id;
@@ -46,7 +46,7 @@ public class sanpham {
         return thanhtien;
     }
 
-    public boolean isXoa() {
+    public int isXoa() {
         return xoa;
     }
 
@@ -78,7 +78,7 @@ public class sanpham {
         this.thanhtien = thanhtien;
     }
 
-    public void setXoa(boolean xoa) {
+    public void setXoa(int xoa) {
         this.xoa = xoa;
     }
 }
