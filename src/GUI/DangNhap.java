@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BLL.nguoidungDAO;
+import DAL.nguoidung;
 import javax.swing.JOptionPane;
 
 /**
@@ -118,6 +120,19 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void btldangnhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btldangnhapMouseClicked
         // TODO add your handling code here:
+        nguoidungDAO user= new nguoidungDAO();
+        nguoidung nguoidung=user.dangnhap(txtusername.getText(),txtpassword.getText());
+        if (nguoidung==null)
+        {
+            JOptionPane.showMessageDialog(null, "Username hoặc mật khẩu không đúng, vui lòng kiểm tra lại");
+
+        }
+        else
+        {  JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
+            GiaoDien show = new  GiaoDien();
+            show.setVisible(true);
+        }
+
        
 
     }//GEN-LAST:event_btldangnhapMouseClicked
