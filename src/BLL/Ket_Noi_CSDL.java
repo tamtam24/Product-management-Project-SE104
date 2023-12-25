@@ -10,24 +10,24 @@ import java.sql.*;
  *
  * @author Admin
  */
-public class Ket_Noi_CSDL {
-    public static Connection getConnection() {
-		Connection C=null;
-		
-		try {
+public class Ket_Noi_CSDL 
+{ protected Connection con=null;
+    public Ket_Noi_CSDL()
+    {
+       try {
 		//Dky voi DriverManager
 		   DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-		   String url = "jdbc:mySQL://localhost:3306/se104_db";
+		   String url = "jdbc:mySQL://localhost:3306/qlbanhang";
 		   String username = "root";
 		   String password = "";
 		   
 		   
 		   //Tao ket noi
-		   C=DriverManager.getConnection(url, username, password);
+		   con=DriverManager.getConnection(url, username, password);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return C;
-	}
+		}    
+    }
+    
 }
