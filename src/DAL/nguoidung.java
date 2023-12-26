@@ -12,7 +12,6 @@ public class nguoidung {
     private String id;
     private String tendangnhap;
     private String matkhau;
-    private boolean xoa;
 
     public String getId() {
         return id;
@@ -26,9 +25,6 @@ public class nguoidung {
         return matkhau;
     }
 
-    public boolean isXoa() {
-        return xoa;
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -42,7 +38,4 @@ public class nguoidung {
         this.matkhau = matkhau;
     }
 
-    public void setXoa(boolean xoa) {
-        this.xoa = xoa;
-    }
 }
