@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `qlbanhang` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `qlbanhang` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `qlbanhang`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
@@ -27,10 +27,9 @@ DROP TABLE IF EXISTS `danhmuc`;
 CREATE TABLE `danhmuc` (
   `id` varchar(10) NOT NULL,
   `ten` varchar(255) NOT NULL,
-  `dongia` float NOT NULL,
-  `xoa` tinyint(1) DEFAULT NULL,
+  `xoa` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +38,7 @@ CREATE TABLE `danhmuc` (
 
 LOCK TABLES `danhmuc` WRITE;
 /*!40000 ALTER TABLE `danhmuc` DISABLE KEYS */;
-INSERT INTO `danhmuc` VALUES ('m1','sp1',10000,0),('m2','sp2',15000,0),('m3','sp3',12000,0),('m4','sp4',17500,0),('m5','sp5',20000,0);
+INSERT INTO `danhmuc` VALUES ('m01','But bi',0),('m02','But chi',0),('m03','Tay',0),('m04','Thuoc ke',0),('m05','But xoa',0),('m06','Vo',0),('m07','Giay A4',0),('m08','Bang dinh',0),('m09','Keo cat giay',0),('m10','Tui clear bag',0);
 /*!40000 ALTER TABLE `danhmuc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,9 +53,8 @@ CREATE TABLE `nguoidung` (
   `id` varchar(10) NOT NULL,
   `tendangnhap` varchar(255) NOT NULL,
   `matkhau` varchar(255) DEFAULT NULL,
-  `xoa` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +63,7 @@ CREATE TABLE `nguoidung` (
 
 LOCK TABLES `nguoidung` WRITE;
 /*!40000 ALTER TABLE `nguoidung` DISABLE KEYS */;
-INSERT INTO `nguoidung` VALUES ('n1','abcxyz','123789',0),('n2','qwerty','123456',0),('n3','admin','666',0),('n4','tendangnhap','matkhau',0),('n5','ManchesterUnited','ManchesterIsBlue',0);
+INSERT INTO `nguoidung` VALUES ('n01','admin','666'),('n02','qwerty','123456'),('n03','abcxyz','123789'),('n04','ManUtd','ManchesterIsBlue');
 /*!40000 ALTER TABLE `nguoidung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,18 +77,13 @@ DROP TABLE IF EXISTS `sanpham`;
 CREATE TABLE `sanpham` (
   `id` varchar(10) NOT NULL,
   `danhmuc_id` varchar(10) DEFAULT NULL,
-  `nguoidung_id` varchar(10) DEFAULT NULL,
   `ten` varchar(255) NOT NULL,
   `dongia` float NOT NULL,
   `soluong` int NOT NULL,
-  `thanhtien` float NOT NULL,
-  `xoa` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `danhmuc_id` (`danhmuc_id`),
-  KEY `nguoidung_id` (`nguoidung_id`),
-  CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`danhmuc_id`) REFERENCES `danhmuc` (`id`),
-  CONSTRAINT `sanpham_ibfk_2` FOREIGN KEY (`nguoidung_id`) REFERENCES `nguoidung` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`danhmuc_id`) REFERENCES `danhmuc` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +92,7 @@ CREATE TABLE `sanpham` (
 
 LOCK TABLES `sanpham` WRITE;
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
-INSERT INTO `sanpham` VALUES ('s01','m2','n3','sp2',15000,4,60000,0),('s02','m4','n2','sp4',17500,2,35000,0),('s03','m5','n5','sp5',20000,3,60000,0),('s04','m1','n1','sp1',10000,5,50000,0),('s05','m3','n3','sp3',12000,7,84000,0),('s06','m2','n2','sp2',15000,1,15000,0),('s07','m5','n4','sp5',20000,6,120000,0),('s08','m1','n5','sp1',10000,9,90000,0),('s09','m4','n4','sp4',17500,6,105000,0),('s10','m3','n3','sp3',12000,2,24000,0);
+INSERT INTO `sanpham` VALUES ('s01','m02','But chi',5000,300),('s02','m03','Tay',4000,100),('s03','m05','But xoa',15000,50),('s04','m07','Giay A4',75000,30),('s05','m09','Keo cat giay',20000,30);
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -112,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-21  1:06:03
+-- Dump completed on 2023-12-25 23:42:54
