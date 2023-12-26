@@ -11,12 +11,9 @@ package DAL;
 public class sanpham {
     private String id;
     private String danhmuc_id;
-    private String nguoidung_id;
     private String ten;
     private float dongia;
     private int soluong;
-    private float thanhtien;
-    private boolean xoa;
 
     public String getId() {
         return id;
@@ -26,9 +23,6 @@ public class sanpham {
         return danhmuc_id;
     }
 
-    public String getNguoidung_id() {
-        return nguoidung_id;
-    }
 
     public String getTen() {
         return ten;
@@ -42,11 +36,7 @@ public class sanpham {
         return soluong;
     }
 
-    public float getThanhtien() {
-        return thanhtien;
-    }
-
-    public boolean isXoa() {
+    public int isXoa() {
         return xoa;
     }
 
@@ -56,10 +46,6 @@ public class sanpham {
 
     public void setDanhmuc_id(String danhmuc_id) {
         this.danhmuc_id = danhmuc_id;
-    }
-
-    public void setNguoidung_id(String nguoidung_id) {
-        this.nguoidung_id = nguoidung_id;
     }
 
     public void setTen(String ten) {
@@ -72,13 +58,5 @@ public class sanpham {
 
     public void setSoluong(int soluong) {
         this.soluong = soluong;
-    }
-
-    public void setThanhtien(float thanhtien) {
-        this.thanhtien = thanhtien;
-    }
-
-    public void setXoa(boolean xoa) {
-        this.xoa = xoa;
     }
 }
