@@ -36,10 +36,6 @@ public class sanpham {
         return soluong;
     }
 
-    public int isXoa() {
-        return xoa;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
