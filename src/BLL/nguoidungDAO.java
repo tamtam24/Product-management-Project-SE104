@@ -40,4 +40,48 @@ public class nguoidungDAO extends Ket_Noi_CSDL{
         return user;
     
     }
+
+    public ArrayList<danhmuc> themnguoidung(String id, String username, String password) {
+        try {
+            string sql = "insert into nguoidung values (?, ?, ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, password);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public ArrayList<danhmuc> suanguoidung(String oldID, String newID, String username, String password) {
+        try {
+            string sql = "update nguoidung set id = ?, tendangnhap = ?, matkhau = ? where id = ?";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, newID);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, oldID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public ArrayList<danhmuc> xoanguoidung(String id) {
+        try {
+            string sql = "delete from nguoidung where id = ?";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }
