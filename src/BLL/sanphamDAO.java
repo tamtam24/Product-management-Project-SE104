@@ -4,16 +4,24 @@
  */
 package BLL;
 
+import DAL.danhmuc;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
-public class sanphamDAO {
+public class sanphamDAO extends Ket_Noi_CSDL {
     public ArrayList<danhmuc> docsanpham() {
         ArrayList<danhmuc> list = new ArrayList<danhmuc>();
         try {
             String sql = "select * from sanpham";
-            Statement statement= con.createStatement();
+            Statement statement = con.createStatement();
             ResultSet result =statement.executeQuery(sql);
             while(result.next()) {
                 danhmuc dm = new danhmuc();
@@ -28,10 +36,10 @@ public class sanphamDAO {
         return list;
     }
 
-    public ArrayList<danhmuc> themsanpham(String id, String danhmuc_id, String ten, float dongia, int soluong) {
+    public int themsanpham(String id, String danhmuc_id, String ten, float dongia, int soluong) {
         try {
-            string sql = "insert into nguoidung values (?, ?, ?, ?, ?)";
-            preparedStatement = con.prepareStatement(sql);
+            String sql = "insert into nguoidung values (?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, danhmuc_id);
             preparedStatement.setString(3, ten);
@@ -45,10 +53,10 @@ public class sanphamDAO {
         return -1;
     }
 
-    public ArrayList<danhmuc> suasanpham(String oldID, String newID, String danhmuc_id, String ten, float dongia, int soluong) {
+    public int suasanpham(String oldID, String newID, String danhmuc_id, String ten, float dongia, int soluong) {
         try {
-            string sql = "update nguoidung set id = ?, danhmuc_id = ?, ten = ?, dongia = ?, soluong = ? where id = ?";
-            preparedStatement = con.prepareStatement(sql);
+            String sql = "update nguoidung set id = ?, danhmuc_id = ?, ten = ?, dongia = ?, soluong = ? where id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, newID);
             preparedStatement.setString(2, danhmuc_id);
             preparedStatement.setString(3, ten);
@@ -63,10 +71,10 @@ public class sanphamDAO {
         return -1;
     }
 
-    public ArrayList<danhmuc> xoasanpham(String id) {
+    public int xoasanpham(String id) {
         try {
-            string sql = "delete from sanpham where id = ?";
-            preparedStatement = con.prepareStatement(sql);
+            String sql = "delete from sanpham where id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, id);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;

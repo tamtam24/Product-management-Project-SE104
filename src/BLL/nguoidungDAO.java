@@ -7,6 +7,8 @@ package BLL;
 import DAL.nguoidung;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -41,10 +43,10 @@ public class nguoidungDAO extends Ket_Noi_CSDL{
     
     }
 
-    public ArrayList<danhmuc> themnguoidung(String id, String username, String password) {
+    public int themnguoidung(String id, String username, String password) {
         try {
-            string sql = "insert into nguoidung values (?, ?, ?)";
-            preparedStatement = con.prepareStatement(sql);
+            String sql = "insert into nguoidung values (?, ?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
@@ -56,10 +58,10 @@ public class nguoidungDAO extends Ket_Noi_CSDL{
         return -1;
     }
 
-    public ArrayList<danhmuc> suanguoidung(String oldID, String newID, String username, String password) {
+    public int suanguoidung(String oldID, String newID, String username, String password) {
         try {
-            string sql = "update nguoidung set id = ?, tendangnhap = ?, matkhau = ? where id = ?";
-            preparedStatement = con.prepareStatement(sql);
+            String sql = "update nguoidung set id = ?, tendangnhap = ?, matkhau = ? where id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, newID);
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
@@ -72,10 +74,10 @@ public class nguoidungDAO extends Ket_Noi_CSDL{
         return -1;
     }
 
-    public ArrayList<danhmuc> xoanguoidung(String id) {
+    public int xoanguoidung(String id) {
         try {
-            string sql = "delete from nguoidung where id = ?";
-            preparedStatement = con.prepareStatement(sql);
+            String sql = "delete from nguoidung where id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, id);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
