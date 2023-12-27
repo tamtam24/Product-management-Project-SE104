@@ -11,7 +11,6 @@ package DAL;
 public class danhmuc {
     private String id;
     private String ten;
-    private float dongia;
     private int xoa;
 
     public String getId() {
@@ -22,9 +21,6 @@ public class danhmuc {
         return ten;
     }
 
-    public float getDongia() {
-        return dongia;
-    }
 
     public int isXoa() {
         return xoa;
@@ -32,10 +28,6 @@ public class danhmuc {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public void setDongia(float dongia) {
-        this.dongia = dongia;
     }
 
     public void setTen(String ten) {
