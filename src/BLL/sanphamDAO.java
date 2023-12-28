@@ -78,16 +78,15 @@ public class sanphamDAO extends Ket_Noi_CSDL {
         return -1;
     }
 
-    public int suasanpham(String oldID, String newID, String danhmuc_id, String ten, float dongia, int soluong) {
+    public int suasanpham(String id, String danhmuc_id, String ten, float dongia, int soluong) {
         try {
-            String sql = "update sanpham set id = ?, danhmuc_id = ?, ten = ?, dongia = ?, soluong = ? where id = ?";
+            String sql = "update sanpham set danhmuc_id = ?, ten = ?, dongia = ?, soluong = ? where id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, newID);
-            preparedStatement.setString(2, danhmuc_id);
-            preparedStatement.setString(3, ten);
-            preparedStatement.setFloat(4, dongia);
-            preparedStatement.setInt(5, soluong);
-            preparedStatement.setString(6, oldID);
+            preparedStatement.setString(1, danhmuc_id);
+            preparedStatement.setString(2, ten);
+            preparedStatement.setFloat(3, dongia);
+            preparedStatement.setInt(4, soluong);
+            preparedStatement.setString(5, id);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         } catch (SQLException e) {
