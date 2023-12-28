@@ -76,6 +76,12 @@ public class GiaoDien extends javax.swing.JFrame {
         btthem.setText("Thêm");
 
         btxoa.setText("Xóa");
+
+        btthem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btthemActionPerformed(evt);
+            }
+        });
         btxoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btxoaActionPerformed(evt);
@@ -206,13 +212,20 @@ public class GiaoDien extends javax.swing.JFrame {
 
         boxdanhmuc.setSelectedItem(listdanhmuc.getSelectedValue());
     }
+
+    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {
+        sanphamDAO spdao = new sanphamDAO();
+        spdao.themsanpham(txtmasp.getText(), "m01", txttensp.getText(), Float.valueOf(txtdongia.getText()), Integer.valueOf(txtdongia.getText()));
+    }
     
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-        // TODO add your handling code here:
+        sanphamDAO spdao = new sanphamDAO();
+        spdao.xoasanpham(txtmasp.getText());
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-        // TODO add your handling code here:
+        sanphamDAO spdao = new sanphamDAO();
+        spdao.suasanpham(txtmasp.getText(), "m01", txttensp.getText(), Float.valueOf(txtdongia.getText()), Integer.valueOf(txtsoluong.getText()));
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btexportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexportActionPerformed
