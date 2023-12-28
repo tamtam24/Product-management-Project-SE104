@@ -4,6 +4,7 @@
  */
 package BLL;
 
+import DAL.sanpham;
 import DAL.danhmuc;
 
 import java.sql.PreparedStatement;
@@ -17,18 +18,42 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class sanphamDAO extends Ket_Noi_CSDL {
-    public ArrayList<danhmuc> docsanpham() {
-        ArrayList<danhmuc> list = new ArrayList<danhmuc>();
+    public ArrayList<sanpham> docsanpham() {
+        ArrayList<sanpham> list = new ArrayList<sanpham>();
         try {
             String sql = "select * from sanpham";
             Statement statement = con.createStatement();
             ResultSet result =statement.executeQuery(sql);
             while(result.next()) {
-                danhmuc dm = new danhmuc();
-                dm.setId(result.getString(1));
-                dm.setTen(result.getString(2));
-                dm.setXoa(result.getInt(3));
-                list.add(dm);
+                sanpham sp = new sanpham();
+                sp.setId(result.getString(1));
+                sp.setDanhmuc_id(result.getString(2));
+                sp.setTen(result.getString(3));
+                sp.setDongia(result.getFloat(4));
+                sp.setSoluong(result.getInt(5));
+                list.add(sp);
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<sanpham> docdanhsachsptheodm(String danhmuc_id) {
+        ArrayList<sanpham> list = new ArrayList<sanpham>();
+        try {
+            String sql = "select * from sanpham where danhmuc_id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, danhmuc_id);
+            ResultSet result = preparedStatement.executeQuery(sql);
+            while(result.next()) {
+                sanpham sp = new sanpham();
+                sp.setId(result.getString(1));
+                sp.setDanhmuc_id(result.getString(2));
+                sp.setTen(result.getString(3));
+                sp.setDongia(result.getFloat(4));
+                sp.setSoluong(result.getInt(5));
+                list.add(sp);
             }
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -38,7 +63,7 @@ public class sanphamDAO extends Ket_Noi_CSDL {
 
     public int themsanpham(String id, String danhmuc_id, String ten, float dongia, int soluong) {
         try {
-            String sql = "insert into nguoidung values (?, ?, ?, ?, ?)";
+            String sql = "insert into sanpham values (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, danhmuc_id);
@@ -55,7 +80,7 @@ public class sanphamDAO extends Ket_Noi_CSDL {
 
     public int suasanpham(String oldID, String newID, String danhmuc_id, String ten, float dongia, int soluong) {
         try {
-            String sql = "update nguoidung set id = ?, danhmuc_id = ?, ten = ?, dongia = ?, soluong = ? where id = ?";
+            String sql = "update sanpham set id = ?, danhmuc_id = ?, ten = ?, dongia = ?, soluong = ? where id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, newID);
             preparedStatement.setString(2, danhmuc_id);
