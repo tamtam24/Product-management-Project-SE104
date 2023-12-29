@@ -43,13 +43,13 @@ public class nguoidungDAO extends Ket_Noi_CSDL{
     
     }
 
-    public int themnguoidung(String id, String username, String password) {
+    public int themnguoidung(nguoidung nd) {
         try {
             String sql = "insert into nguoidung values (?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, id);
-            preparedStatement.setString(2, username);
-            preparedStatement.setString(3, password);
+            preparedStatement.setString(1, nd.getId());
+            preparedStatement.setString(2, nd.getTendangnhap());
+            preparedStatement.setString(3, nd.getMatkhau());
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         } catch (SQLException e) {

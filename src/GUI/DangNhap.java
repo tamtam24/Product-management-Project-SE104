@@ -37,6 +37,7 @@ public class DangNhap extends javax.swing.JFrame {
         label4 = new java.awt.Label();
         btldangnhap = new javax.swing.JButton();
         txtpassword = new javax.swing.JPasswordField();
+        btdki = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,10 +48,10 @@ public class DangNhap extends javax.swing.JFrame {
         label2.setText("Password");
 
         label3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        label3.setText("Phần mềm quản lí sản phẩm");
+        label3.setText("PHẦN MỀM QUẢN LÍ SẢN PHẨM SE104");
 
         label4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        label4.setText("SE104");
+        label4.setText("ĐĂNG NHẬP");
 
         btldangnhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btldangnhap.setText("ĐĂNG NHẬP");
@@ -66,6 +67,19 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
+        btdki.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btdki.setText("ĐĂNG KÍ");
+        btdki.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btdkiMouseClicked(evt);
+            }
+        });
+        btdki.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btdkiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -73,27 +87,27 @@ public class DangNhap extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtusername, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                            .addComponent(txtpassword)))
+                        .addGap(173, 173, 173)
+                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 89, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btldangnhap)
-                        .addGap(160, 160, 160))))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(31, 31, 31)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btldangnhap)
+                                .addGap(29, 29, 29)
+                                .addComponent(btdki, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)))))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,17 +115,19 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addComponent(btldangnhap)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btldangnhap)
+                    .addComponent(btdki))
+                .addGap(69, 69, 69))
         );
 
         pack();
@@ -119,26 +135,33 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void btldangnhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btldangnhapMouseClicked
         // TODO add your handling code here:
-        nguoidungDAO user= new nguoidungDAO();
-        nguoidung nguoidung=user.dangnhap(txtusername.getText(),txtpassword.getText());
-        if (nguoidung==null)
-        {
+        nguoidungDAO user = new nguoidungDAO();
+        nguoidung nguoidung = user.dangnhap(txtusername.getText(), txtpassword.getText());
+        if (nguoidung == null) {
             JOptionPane.showMessageDialog(null, "Username hoặc mật khẩu không đúng, vui lòng kiểm tra lại");
 
-        }
-        else
-        {  JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
-            GiaoDien show = new  GiaoDien();
+        } else {
+            JOptionPane.showMessageDialog(null, "Đăng nhập thành công");
+            GiaoDien show = new GiaoDien();
             show.setVisible(true);
         }
 
-       
 
     }//GEN-LAST:event_btldangnhapMouseClicked
 
     private void txtpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpasswordActionPerformed
+
+    private void btdkiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdkiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btdkiActionPerformed
+
+    private void btdkiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btdkiMouseClicked
+        // TODO add your handling code here:
+        DangKi show = new DangKi();
+        show.setVisible(true);
+    }//GEN-LAST:event_btdkiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -176,6 +199,7 @@ public class DangNhap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btdki;
     private javax.swing.JButton btldangnhap;
     private java.awt.Label label1;
     private java.awt.Label label2;
