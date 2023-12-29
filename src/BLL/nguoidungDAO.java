@@ -7,6 +7,8 @@ package BLL;
 import DAL.nguoidung;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -39,5 +41,49 @@ public class nguoidungDAO extends Ket_Noi_CSDL{
         }
         return user;
     
+    }
+
+    public int themnguoidung(nguoidung nd) {
+        try {
+            String sql = "insert into nguoidung values (?, ?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, nd.getId());
+            preparedStatement.setString(2, nd.getTendangnhap());
+            preparedStatement.setString(3, nd.getMatkhau());
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int suanguoidung(String oldID, String newID, String username, String password) {
+        try {
+            String sql = "update nguoidung set id = ?, tendangnhap = ?, matkhau = ? where id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, newID);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, oldID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int xoanguoidung(String id) {
+        try {
+            String sql = "delete from nguoidung where id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

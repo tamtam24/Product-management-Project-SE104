@@ -29,7 +29,7 @@ CREATE TABLE `danhmuc` (
   `ten` varchar(255) NOT NULL,
   `xoa` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `danhmuc` (
 
 LOCK TABLES `danhmuc` WRITE;
 /*!40000 ALTER TABLE `danhmuc` DISABLE KEYS */;
-INSERT INTO `danhmuc` VALUES ('m01','But bi',0),('m02','But chi',0),('m03','Tay',0),('m04','Thuoc ke',0),('m05','But xoa',0),('m06','Vo',0),('m07','Giay A4',0),('m08','Bang dinh',0),('m09','Keo cat giay',0),('m10','Tui clear bag',0);
+INSERT INTO `danhmuc` VALUES ('m01','Dien tu',0),('m02','Gia dung',0),('m03','Giao duc',0),('m04','Noi that',0),('m05','Thuc pham',0);
 /*!40000 ALTER TABLE `danhmuc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +54,7 @@ CREATE TABLE `nguoidung` (
   `tendangnhap` varchar(255) NOT NULL,
   `matkhau` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +83,7 @@ CREATE TABLE `sanpham` (
   PRIMARY KEY (`id`),
   KEY `danhmuc_id` (`danhmuc_id`),
   CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`danhmuc_id`) REFERENCES `danhmuc` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,11 @@ CREATE TABLE `sanpham` (
 
 LOCK TABLES `sanpham` WRITE;
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
-INSERT INTO `sanpham` VALUES ('s01','m02','But chi',5000,300),('s02','m03','Tay',4000,100),('s03','m05','But xoa',15000,50),('s04','m07','Giay A4',75000,30),('s05','m09','Keo cat giay',20000,30);
+INSERT INTO `sanpham` VALUES ('dt01','m01','RTX 3060',6000000,50),('dt02','m01','Logitech G502',900000,100),('dt03','m01','Akko keyboard',2000000,50),('dt04','m01','MSI Katana',30000000,30),('dt05','m01','CPU intel i7 13700K',7000000,40);
+INSERT INTO `sanpham` VALUES ('gd01','m02','Tu lanh panasonic inverter',9900000,20),('gd02','m02','Loc nuoc Sunhouse',5790000,50),('gd03','m02','Noi com Sunhouse',700000,50),('gd04','m02','May hut bui Gaabor',400000,100),('gd05','m02','Robot hui bui Xiaomi',9000000,200);
+INSERT INTO `sanpham` VALUES ('gduc01','m03','But chi',10000,300),('gduc02','m03','Tay',7000,250),('gduc03','m03','Tu dien',200000,155),('gduc04','m03','Mo hinh trai dat',250000,50),('gduc05','m03','Balo',800000,40);
+INSERT INTO `sanpham` VALUES ('nt01','m04','Sofa Italia ZT280',20000000,43),('nt02','m04','Ban an Tera 2366',36000000,100),('nt03','m04','Ke bep Acrylic',7000000,60),('nt04','m04','San go Carnival ',16000000,30),('nt05','m20','May lanh Inverter',8000000,40);
+INSERT INTO `sanpham` VALUES ('tp01','m05','Ca hoi vua',2000000,50),('tp02','m05','Bo kobe',2200000,20),('tp03','m05','Bao ngu',600000,100),('tp04','m05','Nam truffle',8000000,72),('tp05','m25','Ga chicken plus',200000,50);
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

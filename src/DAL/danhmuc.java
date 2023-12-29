@@ -36,4 +36,8 @@ public class danhmuc {
     public void setXoa(int xoa) {
         this.xoa = xoa;
     }
+    @Override
+    public String toString() {
+        return ten;
+    }
 }

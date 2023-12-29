@@ -4,17 +4,44 @@
  */
 package GUI;
 
+import BLL.danhmucDAO;
+import BLL.sanphamDAO;
+import DAL.danhmuc;
+import DAL.sanpham;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author Admin
  */
 public class GiaoDien extends javax.swing.JFrame {
 
+    ArrayList<sanpham> dssp;
+    int row;
+
     /**
      * Creates new form GiaoDien
      */
     public GiaoDien() {
         initComponents();
+        hienthilist();
     }
 
     /**
@@ -27,31 +54,32 @@ public class GiaoDien extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        list1 = new java.awt.List();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        tbsanpham = new javax.swing.JTable();
+        btimport = new javax.swing.JButton();
+        boxdanhmuc = new javax.swing.JComboBox<>();
+        txtmasp = new javax.swing.JTextField();
+        txttensp = new javax.swing.JTextField();
+        txtsoluong = new javax.swing.JTextField();
+        txtdongia = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listdanhmuc = new javax.swing.JList<>();
+        btThem = new javax.swing.JButton();
+        btXoa = new javax.swing.JButton();
+        btSua = new javax.swing.JButton();
+        btexportfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("PHẦN MỀM QUẢN LÍ SẢN PHẨM");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbsanpham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,45 +87,22 @@ public class GiaoDien extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton1.setText("Thêm");
-
-        jButton2.setText("Xóa");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        tbsanpham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbsanphamMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(tbsanpham);
 
-        jButton3.setText("Sửa");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+        btimport.setText("Import File");
+        btimport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btimportMouseClicked(evt);
             }
         });
-
-        jButton4.setText("Import File");
-
-        jButton5.setText("Export File");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField4");
 
         jLabel2.setText("Danh mục");
 
@@ -109,6 +114,46 @@ public class GiaoDien extends javax.swing.JFrame {
 
         jLabel6.setText("Đơn giá");
 
+        listdanhmuc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listdanhmucMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(listdanhmuc);
+
+        btThem.setText("Thêm");
+        btThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btThemMouseClicked(evt);
+            }
+        });
+        btThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btThemActionPerformed(evt);
+            }
+        });
+
+        btXoa.setText("Xóa");
+        btXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btXoaMouseClicked(evt);
+            }
+        });
+
+        btSua.setText("Sửa");
+        btSua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btSuaMouseClicked(evt);
+            }
+        });
+
+        btexportfile.setText("Export File");
+        btexportfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btexportfileMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,8 +164,9 @@ public class GiaoDien extends javax.swing.JFrame {
                 .addGap(112, 112, 112))
             .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
@@ -129,20 +175,20 @@ public class GiaoDien extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, 123, Short.MAX_VALUE)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(44, 44, 44)
+                    .addComponent(boxdanhmuc, 0, 123, Short.MAX_VALUE)
+                    .addComponent(txtmasp)
+                    .addComponent(txttensp)
+                    .addComponent(txtdongia)
+                    .addComponent(txtsoluong))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btimport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btexportfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
@@ -154,30 +200,30 @@ public class GiaoDien extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton4)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(btimport)
+                            .addComponent(boxdanhmuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(btThem))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton5))
+                            .addComponent(txtmasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btXoa)
+                            .addComponent(btexportfile))
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txttensp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jButton3))
+                            .addComponent(btSua))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                            .addComponent(txtsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtdongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -185,17 +231,257 @@ public class GiaoDien extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    public void hienthilentable() {
+        sanphamDAO spdao = new sanphamDAO();
+        dssp = spdao.docdanhsachsptheodm(listdanhmuc.getSelectedValue().getId());
+        DefaultTableModel dftbl = (DefaultTableModel) tbsanpham.getModel();
+        dftbl.setRowCount(0);
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        for (int i = 0; i < dssp.size(); i++) {
+            String masp = dssp.get(i).getId();
+            String tensp = dssp.get(i).getTen();
+            int soluong = dssp.get(i).getSoluong();
+            float dongia = dssp.get(i).getDongia();
+            Object[] row = new Object[]{masp, tensp, soluong, dongia};
+            dftbl.addRow(row);
+        }
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        boxdanhmuc.setSelectedItem(listdanhmuc.getSelectedValue());
+    }
+    public void hienthilist(){
+        danhmucDAO dmDao= new danhmucDAO();
+        ArrayList<danhmuc> list = dmDao.docdanhmuc();
+        list=dmDao.docdanhmuc();
+        listdanhmuc.setListData(new Vector<danhmuc>(list));
+        DefaultComboBoxModel combo= new DefaultComboBoxModel();
+        for (danhmuc dm : list){
+            combo.addElement(dm);
+        }
+        boxdanhmuc.setModel(combo);
+    }
+    
+    
+
+    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+    
+    private void btThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btThemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btThemActionPerformed
+
+    private void btThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btThemMouseClicked
+        // TODO add your handling code here:
+         int tk = JOptionPane.showConfirmDialog(this, "Bạn có muốn thêm sản phẩm không");
+        if (tk == JOptionPane.YES_OPTION) {
+            sanpham sp = new sanpham();
+            sp.setDanhmuc_id(listdanhmuc.getSelectedValue().getId ());
+            sp.setId(txtmasp.getText());
+            sp.setTen(txttensp.getText());
+            sp.setSoluong(Integer.parseInt(txtsoluong.getText()));
+            sp.setDongia(Float.parseFloat(txtdongia.getText()));
+            sanphamDAO spdao = new sanphamDAO();
+
+            if (spdao.themsanpham(sp) > 0) {
+                JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công");
+                hienthilentable();
+            } else {
+                JOptionPane.showMessageDialog(null, "Thêm sản phẩm lỗi, vui lòng kiểm tra lại");
+            }
+        }
+    }//GEN-LAST:event_btThemMouseClicked
+
+    private void btXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btXoaMouseClicked
+        // TODO add your handling code here:
+        int tk = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa sản phẩm không");
+        if (tk == JOptionPane.YES_OPTION) {
+            sanphamDAO spdao = new sanphamDAO();
+            int idx = tbsanpham.getSelectedRow();
+            if (spdao.xoasanpham(tbsanpham.getValueAt(idx, 0).toString())) {
+                JOptionPane.showMessageDialog(this, "Xóa Sản Phẩm thành công", "Thông Báo", 1);
+                hienthilentable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Lỗi hệ thống", "Thông Báo", 0);
+            }
+
+        }
+        
+        
+    }//GEN-LAST:event_btXoaMouseClicked
+
+    private void btSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSuaMouseClicked
+        // TODO add your handling code here:
+        int tk = JOptionPane.showConfirmDialog(this, "Bạn có muốn sửa sản phẩm không");
+        if (tk == JOptionPane.YES_OPTION) {
+            sanpham sp = new sanpham();
+            sp.setDanhmuc_id(boxdanhmuc.getItemAt(boxdanhmuc.getSelectedIndex()).getId());
+            sp.setId(txtmasp.getText());
+            sp.setTen(txttensp.getText());
+            sp.setSoluong(Integer.parseInt(txtsoluong.getText()));
+            sp.setDongia(Float.parseFloat(txtdongia.getText()));
+            sanphamDAO spdao = new sanphamDAO();
+            if (spdao.suasanpham(sp) > 0) {
+            JOptionPane.showMessageDialog(null, "Câp nhật thành công");
+            hienthilentable();
+        } else {
+            JOptionPane.showMessageDialog(null, "Cập nhật không thành công, vui lòng kiểm tra lại");
+        }
+
+        }
+    }//GEN-LAST:event_btSuaMouseClicked
+
+    private void tbsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbsanphamMouseClicked
+        // TODO add your handling code here:
+        row = tbsanpham.getSelectedRow();
+        sanpham sp = dssp.get(row);
+        txttensp.setText(sp.getTen()); // viet gon hon
+        txtmasp.setText(dssp.get(row).getId());
+//        txtsoluong.setText(String.valueOf(sp.getSoluong()));
+        txtsoluong.setText(sp.getSoluong()+""); //viet gon hon
+        txtdongia.setText(sp.getDongia() + "");
+        
+    }//GEN-LAST:event_tbsanphamMouseClicked
+
+    private void listdanhmucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listdanhmucMouseClicked
+        // TODO add your handling code here:
+        sanphamDAO spdao = new sanphamDAO();
+        hienthilentable();
+    }//GEN-LAST:event_listdanhmucMouseClicked
+
+    private void btimportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btimportMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel dftbl = (DefaultTableModel) tbsanpham.getModel();
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelImportToJTable = null;
+        String defaultCurrentDirectoryPath = "D:\\Lap trinh UIT\\Nhap mon CNPM\\ExcelFile";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelImportToJTable = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
+
+                for (int i = 0; i <= excelSheet.getLastRowNum(); i++) {
+                    XSSFRow excelRow = excelSheet.getRow(i);
+
+                    String masp = excelRow.getCell(0).getStringCellValue();
+                    String tensp = excelRow.getCell(1).getStringCellValue();
+                    double soluongDouble = excelRow.getCell(2).getNumericCellValue();
+                    int soluong = (int) soluongDouble;
+                    double dongiaDouble = excelRow.getCell(3).getNumericCellValue();
+                    float dongia = (float) dongiaDouble;
+                    String madm = excelRow.getCell(4).getStringCellValue();
+
+                    sanpham sp = new sanpham();
+                    sp.setId(masp);
+                    sp.setTen(tensp);
+                    sp.setSoluong(soluong);
+                    sp.setDongia(dongia);
+                    sp.setDanhmuc_id(madm);
+
+                    sanphamDAO spdao = new sanphamDAO();
+                    if (spdao.themsanpham(sp) > 0) {
+                        dftbl.addRow(new Object[]{masp, tensp, soluong, dongia, madm});
+
+                    } else {
+                        // Handle the case where the product couldn't be saved
+                        System.out.println("Could not insert product into database");
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Tải file và thêm vào cơ sở dữ liệu thành công");
+                hienthilentable();
+            } catch (IOException iOException) {
+                JOptionPane.showMessageDialog(null, "Error processing the Excel file: " + iOException.getMessage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage());
+            } finally {
+                try {
+                    if (excelFIS != null) {
+                        excelFIS.close();
+                    }
+                    if (excelBIS != null) {
+                        excelBIS.close();
+                    }
+                    if (excelImportToJTable != null) {
+                        excelImportToJTable.close();
+                    }
+                } catch (IOException iOException) {
+                    JOptionPane.showMessageDialog(null, "Không để đóng file" + iOException.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_btimportMouseClicked
+
+    private void btexportfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btexportfileMouseClicked
+        // TODO add your handling code here:
+        try {
+            XSSFWorkbook wordkbook = new XSSFWorkbook();
+            XSSFSheet sheet = wordkbook.createSheet("danhsach");
+            XSSFRow row = null;
+            Cell cell = null;
+            row = sheet.createRow(0);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SACH SẢN PHẨM CÒN TỒN KHO");
+            row = sheet.createRow(1);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("MASP");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("TENSP");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("SOLUONG");
+
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("DONGIA");
+
+            for (int i = 0; i < dssp.size(); i++) {
+                //Modelbook book =arr.get(i);
+                row = sheet.createRow(2 + i);
+
+                cell = row.createCell(0, CellType.NUMERIC);
+                cell.setCellValue(dssp.get(i).getId());
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(dssp.get(i).getTen());
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(dssp.get(i).getSoluong());
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(dssp.get(i).getDongia());
+
+            }
+
+            File f = new File("D://danhsach.xlsx");
+            try {
+                FileOutputStream fis = new FileOutputStream(f);
+                wordkbook.write(fis);
+                fis.close();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            JOptionPane.showMessageDialog(this, "In thành công, file được lưu tại D://danhsach.xlsx");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Khong the mo file, vui lòng thử lai");
+        }
+        
+    }//GEN-LAST:event_btexportfileMouseClicked
 
     /**
      * @param args the command line arguments
@@ -233,12 +519,12 @@ public class GiaoDien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<danhmuc> boxdanhmuc;
+    private javax.swing.JButton btSua;
+    private javax.swing.JButton btThem;
+    private javax.swing.JButton btXoa;
+    private javax.swing.JButton btexportfile;
+    private javax.swing.JButton btimport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -246,11 +532,12 @@ public class GiaoDien extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private java.awt.List list1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<danhmuc> listdanhmuc;
+    private javax.swing.JTable tbsanpham;
+    private javax.swing.JTextField txtdongia;
+    private javax.swing.JTextField txtmasp;
+    private javax.swing.JTextField txtsoluong;
+    private javax.swing.JTextField txttensp;
     // End of variables declaration//GEN-END:variables
 }
