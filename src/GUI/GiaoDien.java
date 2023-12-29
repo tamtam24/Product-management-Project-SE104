@@ -74,14 +74,13 @@ public class GiaoDien extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbsanpham);
 
         btthem.setText("Thêm");
-
-        btxoa.setText("Xóa");
-
-        btthem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthemActionPerformed(evt);
+        btthem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btthemMouseClicked(evt);
             }
         });
+
+        btxoa.setText("Xóa");
         btxoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btxoaActionPerformed(evt);
@@ -212,11 +211,6 @@ public class GiaoDien extends javax.swing.JFrame {
 
         boxdanhmuc.setSelectedItem(listdanhmuc.getSelectedValue());
     }
-
-    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {
-        sanphamDAO spdao = new sanphamDAO();
-        spdao.themsanpham(txtmasp.getText(), "m01", txttensp.getText(), Float.valueOf(txtdongia.getText()), Integer.valueOf(txtdongia.getText()));
-    }
     
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
         sanphamDAO spdao = new sanphamDAO();
@@ -224,13 +218,30 @@ public class GiaoDien extends javax.swing.JFrame {
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
+        sanpham sp = new sanpham();
+        sp.setId(txtmasp.getText());
+        sp.setDanhmuc_id("m01");
+        sp.setTen(txttensp.getText());
+        sp.setDongia(Float.parseFloat(txtdongia.getText()));
+        sp.setSoluong(Integer.parseInt(txtsoluong.getText()));
         sanphamDAO spdao = new sanphamDAO();
-        spdao.suasanpham(txtmasp.getText(), "m01", txttensp.getText(), Float.valueOf(txtdongia.getText()), Integer.valueOf(txtsoluong.getText()));
+        spdao.suasanpham(txtmasp.getText(), sp);
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btexportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btexportActionPerformed
+
+    private void btthemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btthemMouseClicked
+        sanpham sp = new sanpham();
+        sp.setId(txtmasp.getText());
+        sp.setDanhmuc_id("m01");
+        sp.setTen(txttensp.getText());
+        sp.setDongia(Float.parseFloat(txtdongia.getText()));
+        sp.setSoluong(Integer.parseInt(txtsoluong.getText()));
+        sanphamDAO spdao = new sanphamDAO();
+        spdao.themsanpham(sp);
+    }//GEN-LAST:event_btthemMouseClicked
 
     /**
      * @param args the command line arguments
