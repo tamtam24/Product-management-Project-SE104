@@ -8,11 +8,24 @@ import BLL.danhmucDAO;
 import BLL.sanphamDAO;
 import DAL.danhmuc;
 import DAL.sanpham;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -44,7 +57,6 @@ public class GiaoDien extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbsanpham = new javax.swing.JTable();
         btimport = new javax.swing.JButton();
-        btexport = new javax.swing.JButton();
         boxdanhmuc = new javax.swing.JComboBox<>();
         txtmasp = new javax.swing.JTextField();
         txttensp = new javax.swing.JTextField();
@@ -60,6 +72,7 @@ public class GiaoDien extends javax.swing.JFrame {
         btThem = new javax.swing.JButton();
         btXoa = new javax.swing.JButton();
         btSua = new javax.swing.JButton();
+        btexportfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,11 +98,9 @@ public class GiaoDien extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbsanpham);
 
         btimport.setText("Import File");
-
-        btexport.setText("Export File");
-        btexport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btexportActionPerformed(evt);
+        btimport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btimportMouseClicked(evt);
             }
         });
 
@@ -136,6 +147,13 @@ public class GiaoDien extends javax.swing.JFrame {
             }
         });
 
+        btexportfile.setText("Export File");
+        btexportfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btexportfileMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,7 +188,7 @@ public class GiaoDien extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btimport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btexport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btexportfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
@@ -190,8 +208,8 @@ public class GiaoDien extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtmasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btexport)
-                            .addComponent(btXoa))
+                            .addComponent(btXoa)
+                            .addComponent(btexportfile))
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txttensp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,10 +266,6 @@ public class GiaoDien extends javax.swing.JFrame {
         
     }
     
-    private void btexportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexportActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btexportActionPerformed
-
     private void btThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btThemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btThemActionPerformed
@@ -334,6 +348,141 @@ public class GiaoDien extends javax.swing.JFrame {
         hienthilentable();
     }//GEN-LAST:event_listdanhmucMouseClicked
 
+    private void btimportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btimportMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel dftbl = (DefaultTableModel) tbsanpham.getModel();
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelImportToJTable = null;
+        String defaultCurrentDirectoryPath = "D:\\Lap trinh UIT\\Nhap mon CNPM\\ExcelFile";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelImportToJTable = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
+
+                for (int i = 0; i <= excelSheet.getLastRowNum(); i++) {
+                    XSSFRow excelRow = excelSheet.getRow(i);
+
+                    String masp = excelRow.getCell(0).getStringCellValue();
+                    String tensp = excelRow.getCell(1).getStringCellValue();
+                    double soluongDouble = excelRow.getCell(2).getNumericCellValue();
+                    int soluong = (int) soluongDouble;
+                    double dongiaDouble = excelRow.getCell(3).getNumericCellValue();
+                    float dongia = (float) dongiaDouble;
+                    String madm = excelRow.getCell(4).getStringCellValue();
+
+                    sanpham sp = new sanpham();
+                    sp.setId(masp);
+                    sp.setTen(tensp);
+                    sp.setSoluong(soluong);
+                    sp.setDongia(dongia);
+                    sp.setDanhmuc_id(madm);
+
+                    sanphamDAO spdao = new sanphamDAO();
+                    if (spdao.themsanpham(sp) > 0) {
+                        dftbl.addRow(new Object[]{masp, tensp, soluong, dongia, madm});
+
+                    } else {
+                        // Handle the case where the product couldn't be saved
+                        System.out.println("Could not insert product into database");
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Tải file và thêm vào cơ sở dữ liệu thành công");
+                hienthilentable();
+            } catch (IOException iOException) {
+                JOptionPane.showMessageDialog(null, "Error processing the Excel file: " + iOException.getMessage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage());
+            } finally {
+                try {
+                    if (excelFIS != null) {
+                        excelFIS.close();
+                    }
+                    if (excelBIS != null) {
+                        excelBIS.close();
+                    }
+                    if (excelImportToJTable != null) {
+                        excelImportToJTable.close();
+                    }
+                } catch (IOException iOException) {
+                    JOptionPane.showMessageDialog(null, "Không để đóng file" + iOException.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_btimportMouseClicked
+
+    private void btexportfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btexportfileMouseClicked
+        // TODO add your handling code here:
+        try {
+            XSSFWorkbook wordkbook = new XSSFWorkbook();
+            XSSFSheet sheet = wordkbook.createSheet("danhsach");
+            XSSFRow row = null;
+            Cell cell = null;
+            row = sheet.createRow(0);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SACH SẢN PHẨM CÒN TỒN KHO");
+            row = sheet.createRow(1);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("MASP");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("TENSP");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("SOLUONG");
+
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("DONGIA");
+
+            for (int i = 0; i < dssp.size(); i++) {
+                //Modelbook book =arr.get(i);
+                row = sheet.createRow(2 + i);
+
+                cell = row.createCell(0, CellType.NUMERIC);
+                cell.setCellValue(dssp.get(i).getId());
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(dssp.get(i).getTen());
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(dssp.get(i).getSoluong());
+
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(dssp.get(i).getDongia());
+
+            }
+
+            File f = new File("D://danhsach.xlsx");
+            try {
+                FileOutputStream fis = new FileOutputStream(f);
+                wordkbook.write(fis);
+                fis.close();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            JOptionPane.showMessageDialog(this, "In thành công, file được lưu tại D://danhsach.xlsx");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Khong the mo file, vui lòng thử lai");
+        }
+        
+    }//GEN-LAST:event_btexportfileMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -374,7 +523,7 @@ public class GiaoDien extends javax.swing.JFrame {
     private javax.swing.JButton btSua;
     private javax.swing.JButton btThem;
     private javax.swing.JButton btXoa;
-    private javax.swing.JButton btexport;
+    private javax.swing.JButton btexportfile;
     private javax.swing.JButton btimport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
