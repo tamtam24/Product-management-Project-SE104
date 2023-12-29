@@ -9,5 +9,50 @@ package DAL;
  * @author Admin
  */
 public class sanpham {
-    
+    private String id;
+    private String danhmuc_id;
+    private String ten;
+    private int soluong;
+    private float dongia;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDanhmuc_id() {
+        return danhmuc_id;
+    }
+
+
+    public String getTen() {
+        return ten;
+    }
+
+    public float getDongia() {
+        return dongia;
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDanhmuc_id(String danhmuc_id) {
+        this.danhmuc_id = danhmuc_id;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public void setDongia(float dongia) {
+        this.dongia = dongia;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
 }
