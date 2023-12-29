@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class danhmucDAO extends Ket_Noi_CSDL {
     
     public ArrayList<danhmuc> docdanhmuc() {
-        ArrayList<danhmuc> list = new ArrayList<danhmuc>();
+        ArrayList<danhmuc> list = new ArrayList<>();
         try {
             String sql="select * from danhmuc";
             Statement statement= con.createStatement();
@@ -31,18 +31,18 @@ public class danhmucDAO extends Ket_Noi_CSDL {
                 dm.setXoa(result.getInt(3));
                 list.add(dm);
             }
-        } catch(Exception ex) {
+        } catch(SQLException ex) {
             ex.printStackTrace();
         }
         return list;
     }
 
-    public int themdanhmuc(String id, String ten) {
+    public int themdanhmuc(danhmuc dm) {
         try {
             String sql = "insert into danhmuc values (?, ?, 0)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, id);
-            preparedStatement.setString(2, ten);
+            preparedStatement.setString(1, dm.getId());
+            preparedStatement.setString(2, dm.getTen());
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         } catch (SQLException e) {
@@ -51,17 +51,17 @@ public class danhmucDAO extends Ket_Noi_CSDL {
         return -1;
     }
 
-    public int suadanhmuc(String oldID, String newID, String ten) {
+    public int suadanhmuc(String id, danhmuc dm) {
         try {
             String sql = "update danhmuc set id = ?, ten = ? where id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, newID);
-            preparedStatement.setString(2, ten);
-            preparedStatement.setString(3, oldID);
+            preparedStatement.setString(1, dm.getId());
+            preparedStatement.setString(2, dm.getTen());
+            preparedStatement.setString(3, id);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return -1;
     }
@@ -73,8 +73,8 @@ public class danhmucDAO extends Ket_Noi_CSDL {
             preparedStatement.setString(1, id);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return -1;
     }
