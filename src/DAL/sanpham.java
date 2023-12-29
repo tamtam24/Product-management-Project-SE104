@@ -12,8 +12,8 @@ public class sanpham {
     private String id;
     private String danhmuc_id;
     private String ten;
-    private float dongia;
     private int soluong;
+    private float dongia;
 
     public String getId() {
         return id;

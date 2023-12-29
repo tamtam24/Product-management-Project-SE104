@@ -4,10 +4,14 @@
  */
 package GUI;
 
+import BLL.danhmucDAO;
 import BLL.sanphamDAO;
 import DAL.danhmuc;
 import DAL.sanpham;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,12 +21,14 @@ import javax.swing.table.DefaultTableModel;
 public class GiaoDien extends javax.swing.JFrame {
 
     ArrayList<sanpham> dssp;
+    int row;
 
     /**
      * Creates new form GiaoDien
      */
     public GiaoDien() {
         initComponents();
+        hienthilist();
     }
 
     /**
@@ -37,9 +43,6 @@ public class GiaoDien extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbsanpham = new javax.swing.JTable();
-        btthem = new javax.swing.JButton();
-        btxoa = new javax.swing.JButton();
-        btsua = new javax.swing.JButton();
         btimport = new javax.swing.JButton();
         btexport = new javax.swing.JButton();
         boxdanhmuc = new javax.swing.JComboBox<>();
@@ -54,6 +57,9 @@ public class GiaoDien extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listdanhmuc = new javax.swing.JList<>();
+        btThem = new javax.swing.JButton();
+        btXoa = new javax.swing.JButton();
+        btSua = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,32 +74,15 @@ public class GiaoDien extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"
             }
         ));
+        tbsanpham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbsanphamMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbsanpham);
-
-        btthem.setText("Thêm");
-
-        btxoa.setText("Xóa");
-
-        btthem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthemActionPerformed(evt);
-            }
-        });
-        btxoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btxoaActionPerformed(evt);
-            }
-        });
-
-        btsua.setText("Sửa");
-        btsua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btsuaActionPerformed(evt);
-            }
-        });
 
         btimport.setText("Import File");
 
@@ -103,8 +92,6 @@ public class GiaoDien extends javax.swing.JFrame {
                 btexportActionPerformed(evt);
             }
         });
-
-        boxdanhmuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setText("Danh mục");
 
@@ -116,7 +103,38 @@ public class GiaoDien extends javax.swing.JFrame {
 
         jLabel6.setText("Đơn giá");
 
+        listdanhmuc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listdanhmucMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(listdanhmuc);
+
+        btThem.setText("Thêm");
+        btThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btThemMouseClicked(evt);
+            }
+        });
+        btThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btThemActionPerformed(evt);
+            }
+        });
+
+        btXoa.setText("Xóa");
+        btXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btXoaMouseClicked(evt);
+            }
+        });
+
+        btSua.setText("Sửa");
+        btSua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btSuaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,12 +162,12 @@ public class GiaoDien extends javax.swing.JFrame {
                     .addComponent(txttensp)
                     .addComponent(txtdongia)
                     .addComponent(txtsoluong))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btxoa, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btthem, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btsua, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btimport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btexport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -164,21 +182,21 @@ public class GiaoDien extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btthem)
                             .addComponent(btimport)
                             .addComponent(boxdanhmuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(btThem))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtmasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btxoa)
-                            .addComponent(btexport))
+                            .addComponent(btexport)
+                            .addComponent(btXoa))
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txttensp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(btsua))
+                            .addComponent(btSua))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,25 +230,109 @@ public class GiaoDien extends javax.swing.JFrame {
 
         boxdanhmuc.setSelectedItem(listdanhmuc.getSelectedValue());
     }
-
-    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {
-        sanphamDAO spdao = new sanphamDAO();
-        spdao.themsanpham(txtmasp.getText(), "m01", txttensp.getText(), Float.valueOf(txtdongia.getText()), Integer.valueOf(txtdongia.getText()));
+    public void hienthilist(){
+        danhmucDAO dmDao= new danhmucDAO();
+        ArrayList<danhmuc> list = dmDao.docdanhmuc();
+        list=dmDao.docdanhmuc();
+        listdanhmuc.setListData(new Vector<danhmuc>(list));
+        DefaultComboBoxModel combo= new DefaultComboBoxModel();
+        for (danhmuc dm : list){
+            combo.addElement(dm);
+        }
+        boxdanhmuc.setModel(combo);
     }
     
-    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-        sanphamDAO spdao = new sanphamDAO();
-        spdao.xoasanpham(txtmasp.getText());
-    }//GEN-LAST:event_btxoaActionPerformed
+    
 
-    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-        sanphamDAO spdao = new sanphamDAO();
-        spdao.suasanpham(txtmasp.getText(), "m01", txttensp.getText(), Float.valueOf(txtdongia.getText()), Integer.valueOf(txtsoluong.getText()));
-    }//GEN-LAST:event_btsuaActionPerformed
-
+    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+    
     private void btexportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btexportActionPerformed
+
+    private void btThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btThemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btThemActionPerformed
+
+    private void btThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btThemMouseClicked
+        // TODO add your handling code here:
+         int tk = JOptionPane.showConfirmDialog(this, "Bạn có muốn thêm sản phẩm không");
+        if (tk == JOptionPane.YES_OPTION) {
+            sanpham sp = new sanpham();
+            sp.setDanhmuc_id(listdanhmuc.getSelectedValue().getId ());
+            sp.setId(txtmasp.getText());
+            sp.setTen(txttensp.getText());
+            sp.setSoluong(Integer.parseInt(txtsoluong.getText()));
+            sp.setDongia(Float.parseFloat(txtdongia.getText()));
+            sanphamDAO spdao = new sanphamDAO();
+
+            if (spdao.themsanpham(sp) > 0) {
+                JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công");
+                hienthilentable();
+            } else {
+                JOptionPane.showMessageDialog(null, "Thêm sản phẩm lỗi, vui lòng kiểm tra lại");
+            }
+        }
+    }//GEN-LAST:event_btThemMouseClicked
+
+    private void btXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btXoaMouseClicked
+        // TODO add your handling code here:
+        int tk = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa sản phẩm không");
+        if (tk == JOptionPane.YES_OPTION) {
+            sanphamDAO spdao = new sanphamDAO();
+            int idx = tbsanpham.getSelectedRow();
+            if (spdao.xoasanpham(tbsanpham.getValueAt(idx, 0).toString())) {
+                JOptionPane.showMessageDialog(this, "Xóa Sản Phẩm thành công", "Thông Báo", 1);
+                hienthilentable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Lỗi hệ thống", "Thông Báo", 0);
+            }
+
+        }
+        
+        
+    }//GEN-LAST:event_btXoaMouseClicked
+
+    private void btSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSuaMouseClicked
+        // TODO add your handling code here:
+        int tk = JOptionPane.showConfirmDialog(this, "Bạn có muốn sửa sản phẩm không");
+        if (tk == JOptionPane.YES_OPTION) {
+            sanpham sp = new sanpham();
+            sp.setDanhmuc_id(boxdanhmuc.getItemAt(boxdanhmuc.getSelectedIndex()).getId());
+            sp.setId(txtmasp.getText());
+            sp.setTen(txttensp.getText());
+            sp.setSoluong(Integer.parseInt(txtsoluong.getText()));
+            sp.setDongia(Float.parseFloat(txtdongia.getText()));
+            sanphamDAO spdao = new sanphamDAO();
+            if (spdao.suasanpham(sp) > 0) {
+            JOptionPane.showMessageDialog(null, "Câp nhật thành công");
+            hienthilentable();
+        } else {
+            JOptionPane.showMessageDialog(null, "Cập nhật không thành công, vui lòng kiểm tra lại");
+        }
+
+        }
+    }//GEN-LAST:event_btSuaMouseClicked
+
+    private void tbsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbsanphamMouseClicked
+        // TODO add your handling code here:
+        row = tbsanpham.getSelectedRow();
+        sanpham sp = dssp.get(row);
+        txttensp.setText(sp.getTen()); // viet gon hon
+        txtmasp.setText(dssp.get(row).getId());
+//        txtsoluong.setText(String.valueOf(sp.getSoluong()));
+        txtsoluong.setText(sp.getSoluong()+""); //viet gon hon
+        txtdongia.setText(sp.getDongia() + "");
+        
+    }//GEN-LAST:event_tbsanphamMouseClicked
+
+    private void listdanhmucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listdanhmucMouseClicked
+        // TODO add your handling code here:
+        sanphamDAO spdao = new sanphamDAO();
+        hienthilentable();
+    }//GEN-LAST:event_listdanhmucMouseClicked
 
     /**
      * @param args the command line arguments
@@ -268,12 +370,12 @@ public class GiaoDien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> boxdanhmuc;
+    private javax.swing.JComboBox<danhmuc> boxdanhmuc;
+    private javax.swing.JButton btSua;
+    private javax.swing.JButton btThem;
+    private javax.swing.JButton btXoa;
     private javax.swing.JButton btexport;
     private javax.swing.JButton btimport;
-    private javax.swing.JButton btsua;
-    private javax.swing.JButton btthem;
-    private javax.swing.JButton btxoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
