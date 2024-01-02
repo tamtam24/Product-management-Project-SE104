@@ -53,7 +53,8 @@ CREATE TABLE `nguoidung` (
   `id` varchar(10) NOT NULL,
   `tendangnhap` varchar(255) NOT NULL,
   `matkhau` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`tendangnhap`)
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
